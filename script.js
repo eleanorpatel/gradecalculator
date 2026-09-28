@@ -6,16 +6,25 @@ const grades = document.getElementById("grades")
 
 function popUp(){
     const newWindow = window.open(newTest, "width = 400, height= 600");
-    const input = document.createElement("input")
-                                        input.type= "text", input.id="name"
+    const name = document.createElement("input")
+                                        name.type= "text", name.id="name"
     const date = document.createElement("input")
                                         date.type= "date", input.id="examdate"
     const score = document.createElement("input")
                                         score.type= "number", id="score"
     document.appendChild(newWindow)
-    newWindow.appendChild("input")
+    newWindow.appendChild("name")
     newWindow.appendChild("date")
     newWindow.appendChild("score")
+    const newButton = document.createElement("button")
+                                        newButton.id ="manualsubmit"
+}
+
+function tableEdit(){
+    if (name && date && score)
+    const newRow = document.createElement("tr")
+    newRow.textContent = name.value
+    
 }
 
 manual.addEventListener("click", popUp())
