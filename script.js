@@ -1,8 +1,29 @@
 const addTest = document.getElementById("addtest")
 const fileinput = document.getElementById("fileinput")
 const manual = document.getElementById("manual")
+const grades = document.getElementById("grades")
 
 
 function popUp(){
-    const newWindow = window.open(newTest, dimensions);
+    const newWindow = window.open(newTest, "width = 400, height= 600");
+    const input = document.createElement("input")
+                                        input.type= "text", input.id="name"
+    const date = document.createElement("input")
+                                        date.type= "date", input.id="examdate"
+    const score = document.createElement("input")
+                                        score.type= "number", id="score"
+    document.appendChild(newWindow)
+    newWindow.appendChild("input")
+    newWindow.appendChild("date")
+    newWindow.appendChild("score")
+}
+
+manual.addEventListener("click", popUp())
+
+function recieveFile(file){
+    if file.files.length > 0{
+        const tfile = file.files[0]
+        const data = new FormData()
+        data.append("test uploaded", tfile)
+    }
 }
