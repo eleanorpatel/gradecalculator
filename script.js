@@ -21,7 +21,7 @@ function popUp(){
 }
 
 function tableEdit(){
-    if (subject && date && score)
+    if (subject && date && score){
     const newSubject = document.createElement("tr")
     newSubject.textContent = subject.value
     const newDate = document.createElement("tr")
@@ -29,6 +29,7 @@ function tableEdit(){
     const newScore = document.createElement("tr")
     newScore.textContent = score.value
     grades.appendChild("newDate", "newSubject", "newScore")
+    }
 }
 
 manual.addEventListener("click", popUp())
