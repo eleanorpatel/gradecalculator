@@ -3,7 +3,8 @@ const fileInput = document.getElementById("fileInput")
 const manual = document.getElementById("manual")
 const grades = document.getElementById("grades")
 let deletebtn = document.querySelectorAll(".deleteButton")
-let classificationlist = document.querySelectorAll(".classification")
+let classificationList = document.querySelectorAll(".classification")
+let scoreList = document.querySelectorAll(".score")
 const gradesindv = document.querySelectorAll("tr")
 
 function popUp(){
@@ -32,6 +33,7 @@ function popUp(){
         date.type= "date", date.id="examdate"
     const score = document.createElement("input")
         score.type= "number", score.id="score"
+        scoreList = document.querySelectorAll(".score")
     const submitButton = document.createElement("button")
         submitButton.id ="manualsubmit"
         submitButton.textContent = "addGrade"
@@ -64,14 +66,19 @@ function tableEdit(overlay, classification, date, score){
     const newScore = document.createElement("td")
     newScore.textContent = score.value
     newScore.className="score"
-    const impact = document.createElement("td")
-    impact.textContent = calculateImpact(score, classification)
+ 
+    
     const deleteSection = document.createElement("td")
     const deleteButton = document.createElement("button")
     deleteButton.textContent = " delete "
     deleteButton.className = "deleteButton"
     deleteSection.appendChild(deleteButton)
-    newRow.append(newDate, newclassification, newScore, impact, deleteSection)
+    newRow.append(newDate, newclassification, newScore)
+    const impact = document.createElement("td")
+    classificationList = document.querySelectorAll(".classification")
+    scoreList = document.querySelectorAll(".score")
+    impact.textContent = calculateImpact(score, newclassification)
+    newRow.append(impact, deleteButton)
     grades.appendChild(newRow)
      deleteButton.addEventListener("click", deleteRow)
     overlay.remove()
@@ -89,18 +96,34 @@ deletebtn.forEach(button =>{
 function calculateImpact(y, z){
     let counter = 1
     let scorecounter = 0
-
-        classificationlist.forEach(thing=>{
-            console.log("thing",thing.textContent)
+    let scorearray = Array.from(scoreList)
+    let classificationarray = Array.from(classificationList)
+    const impactMap = new Map(classificationarray.map((key, index)=>[key, scorearray[index]]))
+    
+   /*     classificationlist.forEach(thing=>{
+           console.log("thing",thing.textContent)
             console.log("z",z.textContent)
+            console.log(thing.closest(".score"))
 
            if (thing.textContent == z.textContent){
             counter += 1
-            scorecounter += thing.closest("#score").value
+            scorecounter += thing.closest(".score").value
            }
         })
         console.log(counter)
     let impact = (scorecounter + y.value) / counter;
+    return impact*/
+    for (const[key, value] of impactMap){
+      
+        if( key.textContent == z.textContent){
+              console.log(key.textContent, value.textContent, z.textContent, y.textContent)
+            counter += 1
+            scorecounter += value.textContent
+        }
+        console.log(counter)
+    }
+    console.log(y.value)
+    let impact = (scorecounter + y.value) / counter
     return impact
     }
 
@@ -110,5 +133,3 @@ function recieveFile(file){
         const tfile = file.files[0]
         const data = new FormData()
         data.append("test uploaded", tfile)
-    }
-}
